@@ -1,4 +1,19 @@
-const CardReview = () => {
+'use client';
+import React, {useState} from "react";
+
+interface CardReviewProps {
+    reviewContent: string;
+    reviewDate: string;
+    reviewImages?: string[];
+}
+const CardReview = ({reviewContent, reviewDate, reviewImages}: CardReviewProps) => {
+    const [reviewFullView, setReviewFullView] = useState(false);
+
+    const [imageView, setImageView] = useState<string | null>(null);
+
+    const reviewText = reviewContent || "";
+    const longReviewText = reviewText.length > 150;
+
     return (
         <div>
             <div>
@@ -13,14 +28,52 @@ const CardReview = () => {
                 {/* tombol icon like dan lable review review */}
             </div>
 
-            {/* text review dari user */}
+            <div> 
+                {reviewFullView ? reviewText : reviewText.substring(0, 150)}
+                {!reviewFullView && longReviewText && "..."}
+
+                {longReviewText && (
+                    <button onClick={() => setReviewFullView(!reviewFullView)}>
             
-            {/* field gambar dari product review */}
-            
-            {/* bulan, tanggal dan tahun dari review */}
+                    {reviewFullView ? "Show Less" : " Read More"}
+                    </button>
+                )}
+            </div>
+
+            {reviewImages && reviewImages.length > 0 && (
+                <div>
+                    {reviewImages.map((imageSrc, index) => (
+                        <img
+                            key={index}
+                            src={imageSrc}
+                            alt={`Review Image ${index}`}
+                            onClick={()=> setImageView(imageSrc)}
+                        />
+                    ))}
+                </div>
+
+            )}
+
+            <div>
+                {reviewDate}
+            </div>
+
+            <div>
+                {imageView && (
+                    <div
+                        onClick={() => setImageView(null)}>
+                    <div>
+                        <img 
+                            src={imageView}
+                            alt="Full Preview"
+                        />
+                    </div>
+                    </div>        
+                )}
+            </div>
 
         </div>
-    )
-}
+    );
+};
 
 export default CardReview;
