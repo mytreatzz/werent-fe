@@ -111,6 +111,16 @@ export default function ProductDetail() {
             <h2 className="text-xl font-bold">
               REVIEWS ({dataReviewSummary.totalReviews})
             </h2>
+
+            <div>
+              {/* Button to open review modal */}
+              <button
+                onClick={() => setIsOpen(true)}
+                className="text-sm font-bold text-white bg-black px-4 py-2 rounded-full hover:bg-gray-800 transition"
+              >
+                + Add Review
+              </button>
+            </div>
             <Link
               href="/reviews"
               className="text-green-700 font-semibold hover:underline"
@@ -162,11 +172,11 @@ export default function ProductDetail() {
       </div>
 
       {/* Review Modal */}
-      {/* <ReviewModal 
-        isOpen={true}
-        onClose={() => {}}
+      <ReviewModal 
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
         onSubmit={handleReviewSubmit}
-      /> */}
+      />
     </div>
   );
 }
